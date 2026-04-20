@@ -3,103 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creative Leadership Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <title>Creative Leadership Portfolio | Natasha Rinehart</title>
   <style>
     /* =========================================
-       CSS VARIABLES & RESET
+       CSS VARIABLES
+       Matches portfolio-dashboard exactly:
+       - System font stack
+       - #f5f5f3 background
+       - #185FA5 blue accent
+       - #1a1a1a body text
     ========================================= */
     :root {
-      --black: #0a0a0a;
-      --white: #ffffff;
-      --off-white: #f7f6f3;
-      --accent: #c8102e;        /* Arrow red */
-      --accent-muted: #9e0d24;
-      --text-primary: #1a1a1a;
-      --text-secondary: #555;
-      --text-muted: #888;
-      --border: #e4e2de;
-      --card-bg: #ffffff;
-      --nav-h: 68px;
-      --section-pad: 100px;
-      --max-w: 1160px;
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body: 'DM Sans', sans-serif;
-      --radius: 4px;
-      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.07);
-      --shadow-hover: 0 4px 24px rgba(0,0,0,.13);
-      --transition: 0.22s cubic-bezier(.4,0,.2,1);
+      --dark-bg:       #2a2a2a;
+      --white:         #ffffff;
+      --off-white:     #f5f5f3;
+      --surface:       #ffffff;
+      --accent:        #185FA5;
+      --accent-dark:   #0C447C;
+      --accent-sub:    #E6F1FB;
+      --accent-border: #B5D4F4;
+      --text-1:        #1a1a1a;
+      --text-2:        #444444;
+      --text-3:        #888888;
+      --border:        #e0e0dc;
+      --nav-h:         66px;
+      --pad:           96px;
+      --max-w:         1140px;
+      --f-body:        -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --r:             3px;
+      --sh-sm:         0 1px 3px rgba(0,0,0,.05), 0 3px 12px rgba(0,0,0,.06);
+      --sh-md:         0 4px 24px rgba(0,0,0,.11);
+      --ease:          0.22s cubic-bezier(.4,0,.2,1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; font-size: 16px; }
-
     body {
-      font-family: var(--font-body);
+      font-family: var(--f-body);
       background: var(--off-white);
-      color: var(--text-primary);
-      line-height: 1.6;
+      color: var(--text-1);
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
 
     /* =========================================
-       UTILITY
+       LAYOUT
     ========================================= */
-    .container {
+    .wrap {
       max-width: var(--max-w);
       margin: 0 auto;
       padding: 0 32px;
     }
 
-    .section-label {
-      font-family: var(--font-body);
+    /* =========================================
+       TYPE UTILITIES
+    ========================================= */
+    .eyebrow {
+      display: block;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 18px;
+      margin-bottom: 14px;
+    }
+
+    .rule {
+      width: 36px; height: 2px;
+      background: var(--accent);
+      margin-bottom: 26px;
     }
 
     .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 4vw, 40px);
+      font-size: clamp(22px, 3vw, 32px);
       font-weight: 700;
-      line-height: 1.15;
-      color: var(--text-primary);
-      margin-bottom: 18px;
+      line-height: 1.18;
+      color: var(--text-1);
+      margin-bottom: 14px;
+      letter-spacing: -0.3px;
     }
 
+    /* section-intro stays on one line when space allows, wraps gracefully */
     .section-intro {
-      font-size: 16px;
-      color: var(--text-secondary);
-      max-width: 640px;
-      line-height: 1.75;
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.8;
+      white-space: nowrap;
+      overflow: visible;
+    }
+    @media (max-width: 700px) {
+      .section-intro { white-space: normal; }
     }
 
-    .divider {
-      width: 40px;
-      height: 3px;
-      background: var(--accent);
-      margin-bottom: 32px;
+    /* =========================================
+       SCROLL ANIMATION
+    ========================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* =========================================
        NAVIGATION
     ========================================= */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+      inset: 0 0 auto 0;
+      z-index: 200;
       height: var(--nav-h);
-      background: rgba(10,10,10,0.97);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(30,30,30,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       display: flex;
       align-items: center;
     }
@@ -112,640 +128,590 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 32px;
+      gap: 24px;
     }
 
     .nav-brand {
-      font-family: var(--font-display);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--white);
+      letter-spacing: -0.1px;
       white-space: nowrap;
-      letter-spacing: 0.01em;
     }
-
-    .nav-brand span { color: var(--accent); }
+    .nav-brand span { color: #6aabf7; }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 2px;
       list-style: none;
-      flex-wrap: wrap;
     }
-
     .nav-links a {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.82);
       text-decoration: none;
-      padding: 6px 10px;
-      border-radius: var(--radius);
-      transition: color var(--transition), background var(--transition);
+      padding: 5px 10px;
+      border-radius: var(--r);
+      transition: color var(--ease), background var(--ease);
     }
-
     .nav-links a:hover {
-      color: var(--white);
+      color: #6aabf7;
       background: rgba(255,255,255,0.07);
     }
 
     /* =========================================
-       HERO / HEADER
+       HERO
     ========================================= */
     #hero {
-      background: var(--black);
-      padding-top: calc(var(--nav-h) + 80px);
-      padding-bottom: 96px;
+      background: var(--dark-bg);
+      padding-top: calc(var(--nav-h) + 72px);
+      padding-bottom: 88px;
       position: relative;
       overflow: hidden;
     }
-
     #hero::before {
       content: '';
       position: absolute;
       top: 0; right: 0;
-      width: 520px; height: 520px;
-      background: radial-gradient(circle at top right, rgba(200,16,46,0.12) 0%, transparent 65%);
+      width: 480px; height: 480px;
+      background: radial-gradient(circle at top right, rgba(24,95,165,0.13) 0%, transparent 65%);
       pointer-events: none;
     }
 
-    .hero-eyebrow {
+    .hero-tag {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
-
-    .hero-eyebrow span {
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--accent);
+    }
+    .hero-tag span {
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 2px;
-      background: var(--accent);
+      color: #6aabf7;
     }
 
     .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 5.5vw, 64px);
-      font-weight: 900;
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 700;
       line-height: 1.08;
       color: var(--white);
-      max-width: 780px;
+      max-width: 720px;
       margin-bottom: 36px;
+      letter-spacing: -0.5px;
     }
+    .hero-title em { color: #6aabf7; font-style: normal; }
 
-    .hero-title em {
-      color: var(--accent);
-      font-style: normal;
+    /* Single-column bio */
+    .hero-bio {
+      max-width: 680px;
+      margin-bottom: 44px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-
-    .hero-body {
-      font-size: 16px;
-      color: rgba(255,255,255,0.62);
-      max-width: 640px;
-      line-height: 1.8;
-      margin-bottom: 48px;
-    }
-
-    .hero-pillars {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    .pillar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .pillar-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .pillar span {
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    /* =========================================
-       SECTIONS BASE
-    ========================================= */
-    section {
-      padding: var(--section-pad) 0;
-    }
-
-    section:nth-child(even) {
-      background: var(--white);
-    }
-
-    section:nth-child(odd) {
-      background: var(--off-white);
-    }
-
-    /* =========================================
-       SECTION: CREATIVE FOUNDATION
-    ========================================= */
-    #foundation {
-      background: var(--white) !important;
-    }
-
-    .foundation-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
-      margin-top: 48px;
-    }
-
-    .foundation-stat-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .stat-card {
-      background: var(--off-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-    }
-
-    .stat-number {
-      font-family: var(--font-display);
-      font-size: 40px;
-      font-weight: 900;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      line-height: 1.4;
-    }
-
-    .foundation-copy p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .foundation-copy p:last-child { margin-bottom: 0; }
-
-    /* =========================================
-       CASE STUDIES
-    ========================================= */
-    #case-studies {
-      background: var(--off-white) !important;
-    }
-
-    .case-study-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      margin-top: 56px;
-    }
-
-    .case-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      box-shadow: var(--shadow);
-      transition: box-shadow var(--transition), transform var(--transition);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .case-card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-2px);
-    }
-
-    /* Priority card — accented border only, equal width like all others */
-    .case-card.priority {
-      border-color: var(--accent);
-      border-width: 2px;
-    }
-
-    .priority-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--accent);
-      color: var(--white);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 2px;
-      margin-bottom: 20px;
-      width: fit-content;
-    }
-
-    .case-number {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 12px;
-    }
-
-    .case-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 24px;
-      line-height: 1.25;
-    }
-
-    /* Structured fields */
-    .case-field {
-      margin-bottom: 20px;
-    }
-
-    .case-field-label {
+    .bio-label {
+      display: block;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #6aabf7;
+      margin-bottom: 10px;
+    }
+    .bio-label.second { margin-top: 28px; }
+    .hero-bio p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.56);
+      line-height: 1.84;
+    }
+    .hero-bio p + p { margin-top: 10px; }
+
+    /* Pillars */
+    .hero-pillars {
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+    }
+    .pillar { display: flex; align-items: center; gap: 8px; }
+    .pillar-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #6aabf7;
+      flex-shrink: 0;
+    }
+    .pillar span {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       FOUNDATION
+    ========================================= */
+    #foundation { background: var(--surface); padding: var(--pad) 0; }
+
+    .foundation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      margin-top: 44px;
+    }
+
+    .foundation-copy p {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.82;
+      margin-bottom: 14px;
+    }
+    .foundation-copy p:last-child { margin-bottom: 0; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .stat-card {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px 20px;
+    }
+    .stat-number {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    /* =========================================
+       CASE STUDIES
+    ========================================= */
+    #case-studies { background: var(--off-white); padding: var(--pad) 0; }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      margin-top: 52px;
+    }
+
+    .case-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 36px;
+      box-shadow: var(--sh-sm);
+      transition: box-shadow var(--ease), transform var(--ease), border-color var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .case-card:hover {
+      box-shadow: var(--sh-md);
+      transform: translateY(-2px);
+      border-color: #B5D4F4;
+    }
+    .case-card:focus-within {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .case-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 9px;
+    }
+    .case-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 20px;
+      line-height: 1.3;
+      letter-spacing: -0.2px;
+    }
+
+    /* Collapsible rows */
+    details {
+      margin-bottom: 9px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    summary {
+      padding: 10px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      cursor: pointer;
+      background: var(--off-white);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: color var(--ease), background var(--ease);
+      user-select: none;
+    }
+    summary:hover { color: var(--text-1); background: #eaeae8; }
+    summary::after { content: '+'; font-size: 15px; font-weight: 300; }
+    details[open] summary::after { content: '\2212'; }
+
+    .detail-body {
+      padding: 14px 14px 17px;
+      background: var(--white);
+    }
+
+    .field-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-3);
       margin-bottom: 6px;
     }
-
-    .case-field-body {
+    .field-body {
       font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
+      color: var(--text-2);
+      line-height: 1.72;
     }
-
-    .case-field-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .case-field-list li {
+    .field-list { list-style: none; padding: 0; }
+    .field-list li {
       font-size: 14px;
-      color: var(--text-secondary);
+      color: var(--text-2);
       line-height: 1.65;
-      padding-left: 16px;
+      padding-left: 14px;
       position: relative;
       margin-bottom: 4px;
     }
-
-    .case-field-list li::before {
-      content: '—';
+    .field-list li::before {
+      content: '\2013';
       position: absolute;
       left: 0;
       color: var(--accent);
       font-size: 12px;
     }
 
-    .case-impact {
-      background: var(--off-white);
-      border-left: 3px solid var(--accent);
-      padding: 16px 20px;
-      border-radius: 0 var(--radius) var(--radius) 0;
-      margin-bottom: 24px;
+    .impact-box {
+      background: var(--accent-sub);
+      border-left: 2px solid var(--accent);
+      padding: 13px 16px;
+      border-radius: 0 var(--r) var(--r) 0;
+      margin-bottom: 20px;
       font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
+      color: var(--accent-dark);
+      line-height: 1.72;
     }
 
-    .impact-metrics {
+    .metric-row {
       display: flex;
-      gap: 20px;
+      gap: 9px;
       flex-wrap: wrap;
-      margin-top: 12px;
+      margin-top: 10px;
     }
-
     .metric-chip {
-      background: rgba(200,16,46,0.07);
-      border: 1px solid rgba(200,16,46,0.18);
-      color: var(--accent);
-      font-size: 13px;
+      background: var(--accent-sub);
+      border: 1px solid var(--accent-border);
+      color: var(--accent-dark);
+      font-size: 12px;
       font-weight: 600;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 20px;
     }
 
-    /* Buttons */
-    .btn-group {
+    /* =========================================
+       BUTTONS
+    ========================================= */
+    .btn-row {
       display: flex;
-      gap: 10px;
+      gap: 9px;
       flex-wrap: wrap;
       margin-top: auto;
-      padding-top: 24px;
+      padding-top: 20px;
     }
-
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      font-family: var(--font-body);
-      font-size: 12px;
+      gap: 6px;
+      font-family: var(--f-body);
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 10px 18px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all var(--transition);
-      white-space: nowrap;
+      padding: 9px 15px;
+      border-radius: var(--r);
       border: none;
+      cursor: pointer;
+      transition: all var(--ease);
+      white-space: nowrap;
     }
+    .btn svg { width: 12px; height: 12px; flex-shrink: 0; }
 
-    .btn-primary {
-      background: var(--accent);
-      color: var(--white);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-muted);
-      transform: translateY(-1px);
-    }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
 
     .btn-outline {
       background: transparent;
-      color: var(--text-primary);
+      color: var(--text-1);
       border: 1.5px solid var(--border);
     }
-
     .btn-outline:hover {
       border-color: var(--accent);
       color: var(--accent);
-      background: rgba(200,16,46,0.04);
-    }
-
-    .btn svg {
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
+      background: var(--accent-sub);
     }
 
     /* =========================================
-       ADDITIONAL INITIATIVES
+       INITIATIVES
     ========================================= */
-    #initiatives {
-      background: var(--white) !important;
-    }
+    #initiatives { background: var(--surface); padding: var(--pad) 0; }
 
-    .initiatives-grid {
+    .init-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin-top: 56px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 52px;
     }
-
-    .initiative-card {
+    .init-card {
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
+      border-radius: var(--r);
+      padding: 28px;
       background: var(--off-white);
-      transition: box-shadow var(--transition), transform var(--transition);
+      transition: box-shadow var(--ease), transform var(--ease);
     }
+    .init-card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); }
+    .init-card.featured { background: var(--surface); box-shadow: var(--sh-sm); }
 
-    .initiative-card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-2px);
-    }
-
-    .initiative-card.featured {
-      background: var(--white);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-
-    .initiative-title {
-      font-family: var(--font-display);
-      font-size: 18px;
+    .init-eyebrow {
+      display: block;
+      font-size: 10px;
       font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-      line-height: 1.25;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
     }
-
-    .initiative-body {
+    .init-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 10px;
+      line-height: 1.3;
+      letter-spacing: -0.2px;
+    }
+    .init-body {
       font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 20px;
+      color: var(--text-2);
+      line-height: 1.72;
+      margin-bottom: 18px;
     }
 
     /* =========================================
-       CREATIVE OPERATIONS
+       OPERATIONS
     ========================================= */
-    #operations {
-      background: var(--off-white) !important;
-    }
+    #operations { background: var(--off-white); padding: var(--pad) 0; }
 
     .ops-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 56px;
+      gap: 20px;
+      margin-top: 52px;
     }
-
     .ops-card {
-      background: var(--white);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow);
+      border-radius: var(--r);
+      padding: 28px;
+      box-shadow: var(--sh-sm);
     }
-
     .ops-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(200,16,46,0.07);
-      border-radius: var(--radius);
+      width: 36px; height: 36px;
+      background: var(--accent-sub);
+      border-radius: var(--r);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-
-    .ops-icon svg {
-      width: 18px;
-      height: 18px;
-      color: var(--accent);
-    }
-
+    .ops-icon svg { width: 16px; height: 16px; color: var(--accent); }
     .ops-title {
-      font-family: var(--font-display);
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 10px;
+      color: var(--text-1);
+      margin-bottom: 9px;
+      letter-spacing: -0.1px;
     }
-
     .ops-body {
       font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
+      color: var(--text-2);
+      line-height: 1.72;
     }
 
     /* =========================================
-       CLOSING
+       CLOSING  — dark grey, not black
     ========================================= */
     #closing {
-      background: var(--black) !important;
-      padding: 96px 0;
+      background: var(--dark-bg);
+      padding: 88px 0 80px;
       position: relative;
       overflow: hidden;
     }
-
     #closing::before {
       content: '';
       position: absolute;
       bottom: 0; left: 0;
-      width: 420px; height: 420px;
-      background: radial-gradient(circle at bottom left, rgba(200,16,46,0.10) 0%, transparent 65%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle at bottom left, rgba(24,95,165,0.10) 0%, transparent 65%);
       pointer-events: none;
     }
-
-    .closing-inner {
-      max-width: 720px;
-    }
-
-    .closing-inner .section-label { color: rgba(200,16,46,0.9); }
-
-    .closing-inner .section-title {
-      color: var(--white);
-      margin-bottom: 24px;
-    }
-
+    .closing-inner { max-width: 680px; }
+    .closing-inner .eyebrow { color: #6aabf7; }
+    .closing-inner .rule { background: var(--accent); }
+    .closing-inner .section-title { color: var(--white); }
     .closing-body {
-      font-size: 17px;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.85;
+      font-size: 16px;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.88;
     }
 
     /* =========================================
-       FOOTER
+       PORTFOLIO CALLOUT
+    ========================================= */
+    #callout {
+      background: var(--off-white);
+      padding: 56px 0;
+      border-top: 1px solid var(--border);
+    }
+    .callout-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .callout-text {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.75;
+      max-width: 540px;
+    }
+    .callout-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 11px 20px;
+      border-radius: var(--r);
+      white-space: nowrap;
+      transition: all var(--ease);
+      flex-shrink: 0;
+    }
+    .callout-link:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .callout-link svg { width: 13px; height: 13px; }
+
+    /* =========================================
+       FOOTER  — dark grey, not black
     ========================================= */
     footer {
-      background: #060606;
-      padding: 28px 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      background: #222222;
+      padding: 26px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-
-    footer .container {
+    .footer-inner {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-
-    .footer-brand {
-      font-family: var(--font-display);
-      font-size: 14px;
-      color: rgba(255,255,255,0.35);
-    }
-
-    .footer-note {
-      font-size: 12px;
-      color: rgba(255,255,255,0.22);
-    }
-
-    /* =========================================
-       COLLAPSIBLE (Case study detail sections)
-    ========================================= */
-    details {
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    summary {
-      padding: 12px 16px;
+    .footer-portfolio-title {
       font-size: 11px;
+      color: rgba(255,255,255,0.52);
+      margin-bottom: 2px;
+    }
+    .footer-name {
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      cursor: pointer;
-      background: var(--off-white);
-      list-style: none;
+      color: #6aabf7;
+    }
+    .footer-right {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      transition: color var(--transition), background var(--transition);
-      user-select: none;
+      gap: 16px;
+      flex-wrap: wrap;
     }
-
-    summary:hover { color: var(--text-primary); background: #f0eeea; }
-    summary::after { content: '+'; font-size: 16px; font-weight: 300; }
-    details[open] summary::after { content: '−'; }
-
-    .detail-body {
-      padding: 16px 16px 20px;
-      background: var(--white);
+    .footer-right a {
+      font-size: 11px;
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      transition: color var(--ease);
+    }
+    .footer-right a:hover { color: #6aabf7; }
+    .footer-dot {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
     }
 
     /* =========================================
        RESPONSIVE
     ========================================= */
     @media (max-width: 900px) {
-      .case-study-grid { grid-template-columns: 1fr; }
-      .case-card.priority { grid-column: 1; }
+      .case-grid       { grid-template-columns: 1fr; }
       .foundation-grid { grid-template-columns: 1fr; gap: 40px; }
-      .ops-grid { grid-template-columns: 1fr 1fr; }
-      .initiatives-grid { grid-template-columns: 1fr; }
+      .ops-grid        { grid-template-columns: 1fr 1fr; }
+      .init-grid       { grid-template-columns: 1fr; }
     }
-
+    @media (max-width: 700px) {
+      .section-intro   { white-space: normal; }
+    }
     @media (max-width: 640px) {
-      :root { --section-pad: 64px; }
-      .container { padding: 0 20px; }
-      .nav-links { display: none; }
-      .ops-grid { grid-template-columns: 1fr; }
-      .foundation-stat-block { grid-template-columns: 1fr 1fr; }
-      .hero-pillars { gap: 18px; }
-    }
-
-    /* =========================================
-       SCROLL ANIMATION
-    ========================================= */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
+      :root { --pad: 60px; }
+      .wrap            { padding: 0 20px; }
+      .nav-links       { display: none; }
+      .ops-grid        { grid-template-columns: 1fr; }
+      .stat-grid       { grid-template-columns: 1fr 1fr; }
+      .callout-inner   { flex-direction: column; align-items: flex-start; }
+      .footer-inner    { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ============================
-       NAVIGATION
-  ============================= -->
+  <!-- NAV -->
   <nav>
     <div class="nav-inner">
       <div class="nav-brand">Creative <span>Leadership</span> Portfolio</div>
@@ -759,21 +725,26 @@
     </div>
   </nav>
 
-  <!-- ============================
-       HERO
-  ============================= -->
+  <!-- HERO -->
   <section id="hero">
-    <div class="container">
-      <div class="hero-eyebrow">
-        <span>Brand &amp; Product Experience</span>
-      </div>
+    <div class="wrap">
+      <div class="hero-tag"><span>Brand &amp; Product Experience</span></div>
+
       <h1 class="hero-title">
         Creative Leadership:<br />
         <em>Brand &amp; Product</em><br />Experience
       </h1>
-      <p class="hero-body">
-        My primary objective is to create consistency across complexity. I achieve this by establishing clear creative standards, building scalable systems that streamline execution, and implementing governance that ensures alignment across designers, vendors, sales operations, and leadership teams. My approach connects brand, performance, and operations — ensuring every creative output is cohesive, purposeful, and effective.
-      </p>
+
+      <!-- Single-column bio: About stacked above My Approach -->
+      <div class="hero-bio">
+        <span class="bio-label">About</span>
+        <p>I've spent 18 years at one company, growing from graphic designer to Director of Marketing and E-Commerce for a $150M business. I built an e-commerce channel from zero, rewired lead management, and led a team that runs marketing across 18 locations.</p>
+
+        <span class="bio-label second">My Approach</span>
+        <p>My primary objective is to create consistency across complexity. I achieve this by establishing clear creative standards, building scalable systems that streamline execution, and implementing governance that ensures alignment across designers, vendors, sales operations, and leadership.</p>
+        <p>My approach connects brand, performance, and operations; ensuring every creative output is cohesive, purposeful, and effective, with a strong emphasis on how products are presented digitally to drive engagement and conversion.</p>
+      </div>
+
       <div class="hero-pillars">
         <div class="pillar"><div class="pillar-dot"></div><span>Creative Leadership</span></div>
         <div class="pillar"><div class="pillar-dot"></div><span>Product Presentation</span></div>
@@ -783,22 +754,21 @@
     </div>
   </section>
 
-  <!-- ============================
-       CREATIVE FOUNDATION
-  ============================= -->
+  <!-- FOUNDATION -->
   <section id="foundation">
-    <div class="container">
-      <p class="section-label">Background</p>
-      <div class="divider"></div>
+    <div class="wrap">
+      <span class="eyebrow">Background</span>
+      <div class="rule"></div>
       <h2 class="section-title">Creative Foundation</h2>
+
       <div class="foundation-grid fade-up">
         <div class="foundation-copy">
           <p>Prior to transitioning into leadership, I spent over 15 years as a hands-on creative professional working as both a graphic designer and photographer.</p>
           <p>I founded and operated two successful businesses — one in freelance design and one in photography — serving clients across industries including health and beauty, transportation, associations, grocery, education, municipal government, pet care, and health and wellness.</p>
           <p>My work included full brand development (logos, collateral, signage, advertising) and high-volume photography across weddings, seniors, newborns, families, and lifestyle sessions.</p>
-          <p>This foundation gives me deep understanding of what creative performs. It also gives me credibility as a leader — I have been in the trenches, understand execution realities, and can guide teams while stepping in to support concepting, visual direction, and production when needed.</p>
+          <p>This foundation gives me a deep understanding of what creative performs. It gives me credibility as a leader. I have been in the trenches, understand execution realities, and can guide teams while stepping in to support concepting, visual direction, and production when needed.</p>
         </div>
-        <div class="foundation-stat-block">
+        <div class="stat-grid">
           <div class="stat-card">
             <div class="stat-number">15+</div>
             <div class="stat-label">Years hands-on creative experience</div>
@@ -809,7 +779,7 @@
           </div>
           <div class="stat-card">
             <div class="stat-number">10+</div>
-            <div class="stat-label">Industries served across design &amp; photo</div>
+            <div class="stat-label">Industries served across design and photo</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">360°</div>
@@ -820,19 +790,17 @@
     </div>
   </section>
 
-  <!-- ============================
-       CASE STUDIES
-  ============================= -->
+  <!-- CASE STUDIES -->
   <section id="case-studies">
-    <div class="container">
-      <p class="section-label">Work</p>
-      <div class="divider"></div>
+    <div class="wrap">
+      <span class="eyebrow">Work</span>
+      <div class="rule"></div>
       <h2 class="section-title">Case Studies</h2>
       <p class="section-intro">Structured examples of leadership, strategy, and execution across brand, product, and culture initiatives.</p>
 
-      <div class="case-study-grid">
+      <div class="case-grid">
 
-        <!-- ── CASE STUDY 1 ── -->
+        <!-- Case 1 -->
         <div class="case-card fade-up">
           <p class="case-number">Case Study 01</p>
           <h3 class="case-title">Brand Evolution and Modernization</h3>
@@ -840,14 +808,14 @@
           <details>
             <summary>Context</summary>
             <div class="detail-body">
-              <p class="case-field-body">Arrow is a 75-year legacy brand with strong recognition but inconsistent execution across 18 locations and no unified voice or visual identity.</p>
+              <p class="field-body">Arrow is a 75-year legacy brand with strong recognition but inconsistent execution across 18 locations and no unified voice or visual identity.</p>
             </div>
           </details>
 
           <details>
             <summary>Strategy</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Define a clear brand position, voice, and visual identity</li>
                 <li>Develop a company tagline and icon representing trust, loyalty, and quality</li>
                 <li>Ensure the identity complements the existing logo but can stand alone over time</li>
@@ -859,7 +827,7 @@
           <details>
             <summary>My Role</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Led end-to-end brand initiative across research, strategy, and execution</li>
                 <li>Partnered with an agency to conduct industry research</li>
                 <li>Translated insights into messaging and positioning</li>
@@ -873,22 +841,21 @@
           <details>
             <summary>Approach</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li><strong>Internal:</strong> Reinforced adoption through visible brand integration and cultural alignment</li>
                 <li><strong>External:</strong> Executed multi-phase rollout including awareness, countdown, and launch storytelling</li>
-                <li><strong>Brand Extension:</strong> Developed "Arrow Gives Back" program to connect brand with community engagement</li>
+                <li><strong>Brand Extension:</strong> Developed "Arrow Gives Back" to connect brand with community engagement</li>
               </ul>
             </div>
           </details>
 
-          <div class="case-field">
-            <p class="case-field-label">Impact</p>
-            <div class="case-impact">Transformed a fragmented legacy brand into a unified, scalable identity that strengthened customer trust, improved internal alignment, and created a foundation for consistent growth.</div>
+          <div style="margin-bottom:18px;">
+            <p class="field-label">Impact</p>
+            <div class="impact-box">Transformed a fragmented legacy brand into a unified, scalable identity that strengthened customer trust, improved internal alignment, and created a foundation for consistent growth.</div>
           </div>
 
-          <div class="btn-group">
+          <div class="btn-row">
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1P8wE2oRnOLW7IT4LC8TbvFV9_Z8FZBGc/view?usp=sharing" target="_blank">
-              <!-- arrow-up-right icon -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
               View Brand Assets
             </a>
@@ -903,22 +870,22 @@
           </div>
         </div>
 
-        <!-- ── CASE STUDY 2 (PRIORITY) ── -->
-        <div class="case-card priority fade-up">
+        <!-- Case 2 -->
+        <div class="case-card fade-up">
           <p class="case-number">Case Study 02</p>
-          <h3 class="case-title">Product Presentation &amp; Digital Listing Optimization</h3>
+          <h3 class="case-title">Product Presentation and Digital Listing Optimization</h3>
 
           <details>
             <summary>Context</summary>
             <div class="detail-body">
-              <p class="case-field-body">Product listings lacked consistency and quality, limiting their effectiveness in showcasing inventory and driving customer engagement.</p>
+              <p class="field-body">Product listings lacked consistency and quality, limiting their effectiveness in showcasing inventory and driving customer engagement.</p>
             </div>
           </details>
 
           <details>
             <summary>Strategy</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Standardize and elevate product presentation across all locations</li>
                 <li>Treat listings as digital storefront experiences</li>
                 <li>Improve visual storytelling and usability to drive conversion</li>
@@ -929,7 +896,7 @@
           <details>
             <summary>My Role</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Led development of photo standards and systems</li>
                 <li>Directed transition from manual processes to integrated technology</li>
                 <li>Partnered with vendors to enhance capabilities</li>
@@ -940,7 +907,7 @@
           <details>
             <summary>Approach</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Created structured photo guidelines covering angles, sequencing, and highlights</li>
                 <li>Focused on storytelling through visuals to build buyer confidence</li>
                 <li>Introduced immersive 360° experiences for high-consideration purchases</li>
@@ -948,10 +915,10 @@
             </div>
           </details>
 
-          <div class="case-field">
-            <p class="case-field-label">Impact</p>
-            <div class="case-impact">
-              <div class="impact-metrics">
+          <div style="margin-bottom:18px;">
+            <p class="field-label">Impact</p>
+            <div class="impact-box">
+              <div class="metric-row">
                 <span class="metric-chip">Improved listing consistency</span>
                 <span class="metric-chip">Enhanced buyer evaluation</span>
                 <span class="metric-chip">Increased perceived value</span>
@@ -960,19 +927,15 @@
             </div>
           </div>
 
-          <div class="btn-group">
-            <a class="btn btn-primary" href="https://www.arrowtruck.com/inventory/273112" target="_blank">
+          <div class="btn-row">
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1m4LwVyIhd8sCtEb1FlTrN5-HbYYn30s8/view" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
               View Example Listing
-            </a>
-            <a class="btn btn-outline" href="https://drive.google.com/file/d/1LoFd8wrEqgeGFP6GUeNtVUbRDKQXkTRk/view?usp=drive_link" target="_blank">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-              Photo Standards Guide (v1)
             </a>
           </div>
         </div>
 
-        <!-- ── CASE STUDY 3 ── -->
+        <!-- Case 3 -->
         <div class="case-card fade-up">
           <p class="case-number">Case Study 03</p>
           <h3 class="case-title">Agile Trend Marketing — "Arrow Era" Campaign</h3>
@@ -980,14 +943,14 @@
           <details>
             <summary>Context</summary>
             <div class="detail-body">
-              <p class="case-field-body">A major cultural moment emerged when Taylor Swift released her new album, Showgirl, driving the biggest branding trend of 2025 — the "orange era." This created an opportunity to align the brand with a high-visibility cultural conversation.</p>
+              <p class="field-body">A major cultural moment emerged when Taylor Swift released her new album, Showgirl, driving the biggest branding trend of 2025 — the "orange era." This created an opportunity to align the brand with a high-visibility cultural conversation.</p>
             </div>
           </details>
 
           <details>
-            <summary>Strategy &amp; Approach</summary>
+            <summary>Strategy and Approach</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Align brand with high-visibility cultural trend</li>
                 <li>Leverage existing inventory (orange truck) for authentic execution</li>
                 <li>Execute quickly while maintaining brand consistency</li>
@@ -999,7 +962,7 @@
           <details>
             <summary>My Role</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Identified opportunity and defined creative direction</li>
                 <li>Created concept, messaging, and shot list</li>
                 <li>Led rapid production and deployment</li>
@@ -1007,10 +970,10 @@
             </div>
           </details>
 
-          <div class="case-field">
-            <p class="case-field-label">Impact</p>
-            <div class="case-impact">
-              <div class="impact-metrics">
+          <div style="margin-bottom:18px;">
+            <p class="field-label">Impact</p>
+            <div class="impact-box">
+              <div class="metric-row">
                 <span class="metric-chip">Instagram organic reach +172%</span>
                 <span class="metric-chip">Paid reach +314%</span>
                 <span class="metric-chip">Followers +48%</span>
@@ -1020,7 +983,7 @@
             </div>
           </div>
 
-          <div class="btn-group">
+          <div class="btn-row">
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1fZ9vqo1VYSgheYK23tGplSryM4uD43-8/view?usp=drive_link" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Watch Video
@@ -1028,7 +991,7 @@
           </div>
         </div>
 
-        <!-- ── CASE STUDY 4 ── -->
+        <!-- Case 4 -->
         <div class="case-card fade-up">
           <p class="case-number">Case Study 04</p>
           <h3 class="case-title">Employee Onboarding Video</h3>
@@ -1036,14 +999,14 @@
           <details>
             <summary>Context</summary>
             <div class="detail-body">
-              <p class="case-field-body">Lack of a consistent onboarding experience created gaps in employee understanding of company culture across locations.</p>
+              <p class="field-body">Lack of a consistent onboarding experience created gaps in employee understanding of company culture across locations.</p>
             </div>
           </details>
 
           <details>
-            <summary>Strategy &amp; Approach</summary>
+            <summary>Strategy and Approach</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Create a centralized, story-driven onboarding video</li>
                 <li>Focus on clarity and emotional connection to the brand</li>
                 <li>Deliver a consistent cultural introduction at scale</li>
@@ -1054,7 +1017,7 @@
           <details>
             <summary>My Role</summary>
             <div class="detail-body">
-              <ul class="case-field-list">
+              <ul class="field-list">
                 <li>Led creative vision and direction</li>
                 <li>Defined messaging and structure</li>
                 <li>Guided production from concept through delivery</li>
@@ -1062,12 +1025,12 @@
             </div>
           </details>
 
-          <div class="case-field">
-            <p class="case-field-label">Impact</p>
-            <div class="case-impact">Standardized onboarding experience across all locations, improving cultural alignment and reducing variability in the employee introduction to brand values.</div>
+          <div style="margin-bottom:18px;">
+            <p class="field-label">Impact</p>
+            <div class="impact-box">Standardized onboarding experience across all locations, improving cultural alignment and reducing variability in the employee introduction to brand values.</div>
           </div>
 
-          <div class="btn-group">
+          <div class="btn-row">
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1ePiSwz4nhZRUDtaSQeKm8Q-udAp6a6B9/view?usp=drive_link" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Watch Video
@@ -1075,27 +1038,25 @@
           </div>
         </div>
 
-      </div><!-- /.case-study-grid -->
+      </div><!-- /.case-grid -->
     </div>
   </section>
 
-  <!-- ============================
-       ADDITIONAL INITIATIVES
-  ============================= -->
+  <!-- INITIATIVES -->
   <section id="initiatives">
-    <div class="container">
-      <p class="section-label">Additional Work</p>
-      <div class="divider"></div>
+    <div class="wrap">
+      <span class="eyebrow">Additional Work</span>
+      <div class="rule"></div>
       <h2 class="section-title">Creative Leadership Initiatives</h2>
       <p class="section-intro">A selection of additional projects demonstrating range across internal innovation, brand voice, community, and content strategy.</p>
 
-      <div class="initiatives-grid">
+      <div class="init-grid">
 
-        <div class="initiative-card featured fade-up">
-          <p class="section-label" style="margin-bottom:10px;">Internal Innovation Program</p>
-          <h3 class="initiative-title">Volvo Patent Pathways Support Network</h3>
-          <p class="initiative-body">Developed a full internal innovation program from the ground up — including name, branding, mission, organizational structure, and launch event — to drive participation and engagement across the organization.</p>
-          <div class="btn-group" style="padding-top: 0;">
+        <div class="init-card featured fade-up">
+          <span class="init-eyebrow">Internal Innovation Program</span>
+          <h3 class="init-title">Volvo Patent Pathways Support Network</h3>
+          <p class="init-body">Developed a full internal innovation program from the ground up, including name, branding, mission, organizational structure, and launch event, to drive participation and engagement across the organization.</p>
+          <div class="btn-row" style="padding-top:0;">
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1B4l5Xcufu8l1SOlU-KObTFYH5ReOkVXA/view?usp=drive_link" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Watch Teaser Video
@@ -1107,11 +1068,11 @@
           </div>
         </div>
 
-        <div class="initiative-card featured fade-up">
-          <p class="section-label" style="margin-bottom:10px;">Brand Voice Platform</p>
-          <h3 class="initiative-title">"If You Bought It, I Brought It"</h3>
-          <p class="initiative-body">Built a brand voice platform to highlight the essential role of truck drivers through emotionally engaging content — celebrating the people behind every product on every shelf.</p>
-          <div class="btn-group" style="padding-top: 0;">
+        <div class="init-card featured fade-up">
+          <span class="init-eyebrow">Brand Voice Platform</span>
+          <h3 class="init-title">"If You Bought It, I Brought It."</h3>
+          <p class="init-body">Built a brand voice platform to highlight the essential role of truck drivers through emotionally engaging content, celebrating the people behind every product on every shelf.</p>
+          <div class="btn-row" style="padding-top:0;">
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1ZLh549T1FSIMzosntevU9BrkmgTCnHaJ/view?usp=drive_link" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
               View Art
@@ -1119,29 +1080,27 @@
           </div>
         </div>
 
-        <div class="initiative-card fade-up">
-          <p class="section-label" style="margin-bottom:10px;">Community &amp; Engagement</p>
-          <h3 class="initiative-title">Veteran Engagement Strategy</h3>
-          <p class="initiative-body">Created a recognition program and content strategy featuring veteran customers, driving strong engagement and brand affinity by honoring the people at the core of the trucking industry.</p>
+        <div class="init-card fade-up">
+          <span class="init-eyebrow">Community and Engagement</span>
+          <h3 class="init-title">Veteran Engagement Strategy</h3>
+          <p class="init-body">Created a recognition program and content strategy featuring veteran customers, driving strong engagement and brand affinity by honoring the people at the core of the trucking industry.</p>
         </div>
 
-        <div class="initiative-card fade-up">
-          <p class="section-label" style="margin-bottom:10px;">Planning &amp; Execution</p>
-          <h3 class="initiative-title">Annual Content Calendar</h3>
-          <p class="initiative-body">Developed a structured content planning system to align brand messaging across channels and improve execution consistency — ensuring creative output is strategic, timely, and on-brand year-round.</p>
+        <div class="init-card fade-up">
+          <span class="init-eyebrow">Planning and Execution</span>
+          <h3 class="init-title">Annual Content Calendar</h3>
+          <p class="init-body">Developed a structured content planning system to align brand messaging across channels and improve execution consistency, ensuring creative output is strategic, timely, and on-brand year-round.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============================
-       CREATIVE OPERATIONS
-  ============================= -->
+  <!-- OPERATIONS -->
   <section id="operations">
-    <div class="container">
-      <p class="section-label">Systems &amp; Scalability</p>
-      <div class="divider"></div>
+    <div class="wrap">
+      <span class="eyebrow">Systems and Scalability</span>
+      <div class="rule"></div>
       <h2 class="section-title">Scalable Creative Operations</h2>
       <p class="section-intro">Building infrastructure that enables creative teams to execute consistently, efficiently, and at scale.</p>
 
@@ -1149,16 +1108,14 @@
 
         <div class="ops-card fade-up">
           <div class="ops-icon">
-            <!-- layers icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
           </div>
           <h3 class="ops-title">Sales Enablement Systems</h3>
-          <p class="ops-body">Developed centralized ordering portals with built-in brand controls while enabling field autonomy — balancing consistency with the flexibility teams need to operate efficiently across locations.</p>
+          <p class="ops-body">Developed centralized ordering portals with built-in brand controls while enabling field autonomy, balancing consistency with the flexibility teams need to operate efficiently across locations.</p>
         </div>
 
         <div class="ops-card fade-up">
           <div class="ops-icon">
-            <!-- zap icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
           <h3 class="ops-title">Workflow Automation</h3>
@@ -1167,66 +1124,77 @@
 
         <div class="ops-card fade-up">
           <div class="ops-icon">
-            <!-- shield icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <h3 class="ops-title">Governance &amp; Budget Control</h3>
-          <p class="ops-body">Established structured processes to maintain brand alignment, control spend, and ensure consistency at scale — giving leadership clear visibility while empowering teams to execute confidently.</p>
+          <h3 class="ops-title">Governance and Budget Control</h3>
+          <p class="ops-body">Established structured processes to maintain brand alignment, control spend, and ensure consistency at scale, giving leadership clear visibility while empowering teams to execute confidently.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============================
-       CLOSING
-  ============================= -->
+  <!-- CLOSING -->
   <section id="closing">
-    <div class="container">
+    <div class="wrap">
       <div class="closing-inner">
-        <p class="section-label">Summary</p>
-        <div class="divider"></div>
+        <span class="eyebrow">Summary</span>
+        <div class="rule"></div>
         <h2 class="section-title">The Focus Is Simple.</h2>
-        <p class="closing-body">
-          Elevate how products are presented. Ensure brand consistency at scale. Build systems that allow creative to drive measurable business impact. Every initiative reflected here is grounded in that same commitment — connecting brand, performance, and operations into one coherent, executable strategy.
-        </p>
+        <p class="closing-body">Elevate how products are presented. Ensure brand consistency at scale. Build systems that allow creative to drive measurable business impact. Every initiative reflected here is grounded in that same commitment, connecting brand, performance, and operations into one coherent, executable strategy.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============================
-       FOOTER
-  ============================= -->
+  <!-- CALLOUT -->
+  <section id="callout">
+    <div class="wrap">
+      <div class="callout-inner">
+        <p class="callout-text">Want to see how the brand and creative work connects to lead generation, e-commerce, and revenue systems?</p>
+        <a class="callout-link" href="https://natasharinehart.github.io/portfolio-dashboard/" target="_blank">
+          Explore my Portfolio Dashboard
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <div class="container">
-      <div class="footer-brand">Creative Leadership Portfolio</div>
-      <div class="footer-note">Brand &amp; Product Experience</div>
+    <div class="wrap">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-portfolio-title">Creative Leadership Portfolio</div>
+          <div class="footer-name">Natasha Rinehart</div>
+        </div>
+        <div class="footer-right">
+          <a href="mailto:artangel74@gmail.com">artangel74@gmail.com</a>
+          <span class="footer-dot">&nbsp;·&nbsp;</span>
+          <a href="https://www.linkedin.com/in/tasha-rinehart/" target="_blank">LinkedIn</a>
+          <span class="footer-dot">&nbsp;·&nbsp;</span>
+          <a href="tel:4178493008">417-849-3008</a>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- ============================
-       JS: Scroll animations
-  ============================= -->
   <script>
-    // Intersection Observer for fade-up animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(el => {
-        if (el.isIntersecting) {
-          el.target.classList.add('visible');
-          observer.unobserve(el.target);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.07 });
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // Stagger children of grids
-    document.querySelectorAll('.case-study-grid, .initiatives-grid, .ops-grid').forEach(grid => {
-      const cards = grid.querySelectorAll('.fade-up');
-      cards.forEach((card, i) => {
-        card.style.transitionDelay = `${i * 80}ms`;
+    document.querySelectorAll('.case-grid, .init-grid, .ops-grid').forEach(grid => {
+      grid.querySelectorAll('.fade-up').forEach((card, i) => {
+        card.style.transitionDelay = `${i * 70}ms`;
       });
     });
+
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
   </script>
 
 </body>
